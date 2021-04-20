@@ -75,7 +75,7 @@ public class MyBSCSCurriculumMonitoringApplicationWithGUI extends JFrame{
     } /// end of constructor
 
     /**
-     * Opens new window
+     * Opens the firstOptionWindow
      *
      * 1.) Listens for the button firstOptionB to be clicked
      * 2.) Initiates a new window
@@ -83,7 +83,7 @@ public class MyBSCSCurriculumMonitoringApplicationWithGUI extends JFrame{
     private class firstOptionButtonHandler implements ActionListener{
         public void actionPerformed(ActionEvent e){
             try {
-                new newWindow();
+                new firstOptionWindow();
             } catch (Exception exception){
                 exception.printStackTrace();
             }
@@ -139,26 +139,26 @@ public class MyBSCSCurriculumMonitoringApplicationWithGUI extends JFrame{
     /**
      * Displays the contents of the ArrayList in a Scroll Panel
      */
-    private class newWindow{
-        newWindow() throws Exception {
+    private class firstOptionWindow{
+        public firstOptionWindow() throws Exception {
             JPanel subjectsPanel = new JPanel();
-            JLabel columns = new JLabel();
+            JScrollPane scrollPane = new JScrollPane();
+            topText = new JLabel("Year Level/Term/Course/Title/Units/Grade", SwingConstants.LEFT);
 
             ArrayList<Course> subjectsList = readData(source);
-
+            // converts the ArrayList subjectList into a regular Array to input inside a JList
             JList<Course> list = new JList<Course>(subjectsList.toArray(new Course[subjectsList.size()]));
-            list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-            JScrollPane scrollPane = new JScrollPane();
             scrollPane.setViewportView(list);
             list.setLayoutOrientation(JList.VERTICAL);
-
+            subjectsPanel.setLayout(new GridLayout(2,1));
+            subjectsPanel.add(topText);
             subjectsPanel.add(scrollPane);
             frame.setTitle("Courses Per Term");
+
             frame.add(subjectsPanel);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.pack();
-            //frame.setSize(420,420);
             frame.setVisible(true);
         }
     }
