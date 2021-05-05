@@ -1,0 +1,64 @@
+package prog2.finalgroup;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class MyProgramUtility {
+    public static Scanner fileReader;
+    /**
+     * This method counts the number of lines in the file
+     *
+     * @param file
+     * @return count
+     * @throws FileNotFoundException
+     * @throws Exception
+     */
+    public int countLines(String file) throws FileNotFoundException, Exception {
+        int count = 0;
+        fileReader = new Scanner(new File(file));
+        while (fileReader.hasNextLine()) {
+            fileReader.nextLine();
+            count += 1;
+        }
+        fileReader.close();
+        return count;
+    }
+    /**
+     * This method sorts the list of the data file
+     *
+     * Algorithm:
+     * 1.) The program reads the file
+     * 2.) Splits the values using the given delimiter
+     * 3.) Store the different values in different variables
+     * 4.) Create a new data and add it to the ArrayList
+     * 5. If an error occurred, print a message that displays the location where the error happened
+     *
+     * @param file
+     * @return listOfCitizen
+     * @throws Exception
+     */
+    public ArrayList<Citizen> readData(String file) throws Exception {
+        ArrayList<Citizen> listOfCitizens = new ArrayList<>(countLines(file));
+        String lineOfText = "";
+        int lineNumber = 0;
+        int index = 0;
+        try {
+            fileReader = new Scanner(new File(file));
+            while (fileReader.hasNextLine()) {
+                lineNumber += 1;
+                lineOfText = fileReader.nextLine();
+                String[] temp = lineOfText.split("/");
+                Citizen data = new Citizen(); //Create citizens
+                listOfCitizens.add(data);
+                index += 1;
+            }
+        } catch (Exception exc) {
+            System.out.println("There is a problem in the data read from line " + lineNumber + " of the data file.");
+            System.out.println("The program needed to be terminated.");
+            System.out.println("Please fix the problem in the data file.");
+            exc.printStackTrace();
+        }
+        return listOfCitizens;
+    }
+}
